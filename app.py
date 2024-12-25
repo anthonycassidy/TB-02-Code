@@ -8,6 +8,7 @@ import logging
 from hardware.motor_controller import MotorController
 from hardware.servo_controller import ServoController
 from hardware.camera_stream import CameraStream
+from hardware.battery_monitor import BatteryMonitor
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -20,6 +21,23 @@ socketio = SocketIO(app)
 motor_controller = MotorController()
 servo_controller = ServoController()
 camera_stream = CameraStream().start()
+
+def battery_status_callback(status):
+    """Callback for battery status updates"""
+    socketio.emit('battery_status', status)
+    if status['is_critical']:
+        socketio.emit('battery_alert', {
+            'level': 'critical',
+            'message': 'CRITICAL BATTERY LEVEL! Please charge immediately!'
+        })
+    elif status['is_low']:
+        socketio.emit('battery_alert', {
+            'level': 'warning',
+            'message': 'Low battery warning. Please charge soon.'
+        })
+
+# Initialize battery monitor
+battery_monitor = BatteryMonitor(callback=battery_status_callback)
 
 @app.route('/')
 def index():
@@ -42,6 +60,8 @@ def video_feed():
 @socketio.on('connect')
 def handle_connect():
     logging.info('Client connected')
+    # Send initial battery status
+    socketio.emit('battery_status', battery_monitor.get_status())
 
 @socketio.on('disconnect')
 def handle_disconnect():
@@ -102,6 +122,7 @@ def cleanup():
     camera_stream.stop()
     motor_controller.cleanup()
     servo_controller.cleanup()
+    battery_monitor.stop()
     GPIO.cleanup()
 
 if __name__ == '__main__':

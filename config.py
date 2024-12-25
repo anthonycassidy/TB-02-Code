@@ -29,6 +29,13 @@ SERVO_PINS = {
     'REAR_RIGHT': 23
 }
 
+# Battery Monitoring Configuration
+BATTERY_ADC_PIN = 26  # GPIO26 for battery voltage monitoring
+BATTERY_CHECK_INTERVAL = 10  # seconds
+BATTERY_ALERT_THRESHOLD = 10.8  # volts for 3S LiPo (3.6V per cell)
+BATTERY_CRITICAL_THRESHOLD = 10.2  # volts
+BATTERY_MAX_VOLTAGE = 12.6  # volts (fully charged 3S LiPo)
+
 # Camera Configuration
 CAMERA_RESOLUTION = (640, 480)
 CAMERA_FRAMERATE = 24

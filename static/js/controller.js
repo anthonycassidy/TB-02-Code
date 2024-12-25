@@ -22,6 +22,16 @@ class RobotController {
             console.error('WebSocket error:', error);
             this.updateStatus('Error: ' + error, 'danger');
         });
+
+        // Battery status updates
+        this.socket.on('battery_status', (status) => {
+            this.updateBatteryStatus(status);
+        });
+
+        // Battery alerts
+        this.socket.on('battery_alert', (alert) => {
+            this.showBatteryAlert(alert);
+        });
     }
 
     setupJoysticks() {
@@ -61,6 +71,33 @@ class RobotController {
                 this.updateStatus('Emergency Stop Activated', 'warning');
             }
         });
+    }
+
+    updateBatteryStatus(status) {
+        const batteryLevel = document.getElementById('battery-level');
+        const batteryVoltage = document.getElementById('battery-voltage');
+
+        // Update battery level indicator
+        batteryLevel.style.width = `${status.percentage}%`;
+        batteryLevel.textContent = `${status.percentage}%`;
+        batteryVoltage.textContent = `${status.voltage}V`;
+
+        // Update color based on status
+        batteryLevel.className = 'progress-bar';
+        if (status.is_critical) {
+            batteryLevel.classList.add('bg-danger');
+        } else if (status.is_low) {
+            batteryLevel.classList.add('bg-warning');
+        } else {
+            batteryLevel.classList.add('bg-success');
+        }
+    }
+
+    showBatteryAlert(alert) {
+        const alertElement = document.getElementById('battery-alert');
+        alertElement.textContent = alert.message;
+        alertElement.className = `alert alert-${alert.level} mt-3`;
+        alertElement.classList.remove('d-none');
     }
 
     updateStatus(message, type) {

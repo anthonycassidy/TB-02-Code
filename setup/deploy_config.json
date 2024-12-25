@@ -1,0 +1,27 @@
+{
+    "application": {
+        "name": "Robot Control Interface",
+        "install_path": "/opt/robot-control",
+        "user": "pi",
+        "group": "pi"
+    },
+    "network": {
+        "port": 5000,
+        "allow_remote_access": true
+    },
+    "hardware": {
+        "camera_enabled": true,
+        "camera_rotation": 180,
+        "battery_monitoring_enabled": true,
+        "battery_check_interval": 10
+    },
+    "gpio": {
+        "i2c_bus": 1,
+        "pwm_frequency": 50
+    },
+    "safety": {
+        "battery_alert_threshold": 10.8,
+        "battery_critical_threshold": 10.2,
+        "emergency_stop_enabled": true
+    }
+}

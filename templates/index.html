@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control Interface</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="text-center py-4">
+            <h1>Robot Control Interface</h1>
+        </header>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="camera-container text-center">
+                    <img src="{{ url_for('video_feed') }}" alt="Camera Feed" class="camera-feed">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="connection-status" class="alert alert-secondary">
+                    Connecting...
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="control-panel">
+                    <h3 class="text-center">Drive Control</h3>
+                    <div id="drive-joystick"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control-panel">
+                    <h3 class="text-center">Steering Control</h3>
+                    <div id="steering-joystick"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <button id="emergency-stop" class="btn btn-danger emergency-stop">
+                    STOP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/joystick.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/controller.js') }}"></script>
+</body>
+</html>

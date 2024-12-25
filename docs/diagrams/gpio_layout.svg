@@ -1,0 +1,40 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .pin { font: 12px sans-serif; }
+        .title { font: bold 14px sans-serif; }
+        .connection { stroke: #666; stroke-width: 2; }
+        .component { fill: #444; stroke: #888; }
+    </style>
+    
+    <!-- Raspberry Pi -->
+    <rect x="350" y="250" width="100" height="150" class="component"/>
+    <text x="360" y="270" class="title">Raspberry Pi</text>
+    
+    <!-- L298N Drivers -->
+    <rect x="100" y="100" width="80" height="100" class="component"/>
+    <text x="110" y="120" class="title">L298N 1</text>
+    
+    <rect x="100" y="400" width="80" height="100" class="component"/>
+    <text x="110" y="420" class="title">L298N 2</text>
+    
+    <!-- Servo Motors -->
+    <rect x="600" y="100" width="60" height="40" class="component"/>
+    <text x="610" y="120" class="title">Servo 1</text>
+    
+    <rect x="600" y="200" width="60" height="40" class="component"/>
+    <text x="610" y="220" class="title">Servo 2</text>
+    
+    <!-- Connection lines -->
+    <path d="M 350,300 L 180,150" class="connection"/>
+    <path d="M 350,350 L 180,450" class="connection"/>
+    <path d="M 450,300 L 600,120" class="connection"/>
+    <path d="M 450,350 L 600,220" class="connection"/>
+    
+    <!-- Pin labels -->
+    <text x="200" y="280" class="pin">Motor Control Pins:
+        GPIO2,3,4,17,27,22
+        GPIO5,6,13,10,9,11</text>
+    
+    <text x="500" y="280" class="pin">Servo Pins:
+        GPIO14,15,18,23</text>
+</svg>
